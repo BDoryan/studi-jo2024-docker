@@ -2,15 +2,9 @@
 
 Application de billetterie pour les Jeux Olympiques 2024, containerisée avec Docker. Cette application full-stack combine un back-end Spring Boot et un front-end React dans un seul conteneur optimisé.
 
-## Liens vers les autres documentations
-
-### Front-end
-
-https://github.com/BDoryan/studi-jo2024-frontend/
-
-### Back-end
-
-https://github.com/BDoryan/studi-jo2024-backend/
+## Liens vers les autres documentations
+ - [Front-end](https://github.com/BDoryan/studi-jo2024-frontend/)
+ - [Back-end](https://github.com/BDoryan/studi-jo2024-backend/)
 
 ## Table des matières
 
@@ -199,8 +193,6 @@ docker exec -it jo2024-db mysql -u root -p
 ├── Dockerfile
 ├── back-end
 │   ├── jo2024-0.0.1-SNAPSHOT.jar
-│   ├── v1_jo2024-0.0.1-SNAPSHOT.jar
-│   └── v2_jo2024-0.0.1-SNAPSHOT.jar
 ├── docker-compose.yml
 ├── front-end
 │   ├── build
@@ -224,90 +216,6 @@ docker exec -it jo2024-db mysql -u root -p
 │   │   ├── logo512.png
 │   │   ├── manifest.json
 │   │   └── robots.txt
-│   ├── build_v2
-│   │   ├── assets
-│   │   │   ├── index-3mDVCwot.js
-│   │   │   └── index-Bm88JQgf.css
-│   │   ├── favicon.ico
-│   │   ├── fonts
-│   │   │   └── paris2024.ttf
-│   │   ├── imgs
-│   │   │   ├── display.jpeg
-│   │   │   ├── hero-bg.jpg
-│   │   │   ├── logo-paralympiques.png
-│   │   │   ├── logo.png
-│   │   │   └── sports
-│   │   │       ├── athletisme.jpeg
-│   │   │       ├── football.jpeg
-│   │   │       └── natation.jpeg
-│   │   ├── index.html
-│   │   ├── logo192.png
-│   │   ├── logo512.png
-│   │   ├── manifest.json
-│   │   └── robots.txt
-│   ├── build_v3
-│   │   ├── assets
-│   │   │   ├── index-B6-J-VXJ.css
-│   │   │   └── index-Cio4tx-k.js
-│   │   ├── favicon.ico
-│   │   ├── fonts
-│   │   │   └── paris2024.ttf
-│   │   ├── imgs
-│   │   │   ├── display.jpeg
-│   │   │   ├── hero-bg.jpg
-│   │   │   ├── logo-paralympiques.png
-│   │   │   ├── logo.png
-│   │   │   └── sports
-│   │   │       ├── athletisme.jpeg
-│   │   │       ├── football.jpeg
-│   │   │       └── natation.jpeg
-│   │   ├── index.html
-│   │   ├── logo192.png
-│   │   ├── logo512.png
-│   │   ├── manifest.json
-│   │   └── robots.txt
-│   ├── old_build
-│   │   ├── assets
-│   │   │   ├── index-BTSpj2mU.js
-│   │   │   └── index-C2Kr0Bh1.css
-│   │   ├── favicon.ico
-│   │   ├── fonts
-│   │   │   └── paris2024.ttf
-│   │   ├── imgs
-│   │   │   ├── display.jpeg
-│   │   │   ├── hero-bg.jpg
-│   │   │   ├── logo-paralympiques.png
-│   │   │   ├── logo.png
-│   │   │   └── sports
-│   │   │       ├── athletisme.jpeg
-│   │   │       ├── football.jpeg
-│   │   │       └── natation.jpeg
-│   │   ├── index.html
-│   │   ├── logo192.png
-│   │   ├── logo512.png
-│   │   ├── manifest.json
-│   │   └── robots.txt
-│   └── v3__build
-│       ├── assets
-│       │   ├── index-CHahelWz.css
-│       │   └── index-D64u1ZB4.js
-│       ├── favicon.ico
-│       ├── fonts
-│       │   └── paris2024.ttf
-│       ├── imgs
-│       │   ├── display.jpeg
-│       │   ├── hero-bg.jpg
-│       │   ├── logo-paralympiques.png
-│       │   ├── logo.png
-│       │   └── sports
-│       │       ├── athletisme.jpeg
-│       │       ├── football.jpeg
-│       │       └── natation.jpeg
-│       ├── index.html
-│       ├── logo192.png
-│       ├── logo512.png
-│       ├── manifest.json
-│       └── robots.txt
 ├── nginx.conf
 └── supervisord.conf
 
