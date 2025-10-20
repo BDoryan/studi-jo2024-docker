@@ -6,6 +6,9 @@ Application de billetterie pour les Jeux Olympiques 2024, containerisée avec Do
 - [Front-end](https://github.com/BDoryan/studi-jo2024-frontend/)
 - [Back-end](https://github.com/BDoryan/studi-jo2024-backend/)
 
+## Schema
+<img src="https://github.com/BDoryan/studi-jo2024-docker/blob/main/schema.png?raw=true">
+
 ## Table des matières
 
 - [Architecture](#architecture)
@@ -192,30 +195,30 @@ docker exec -it jo2024-db mysql -u root -p
 .
 ├── Dockerfile
 ├── back-end
-│   ├── jo2024-0.0.1-SNAPSHOT.jar
+│   ├── jo2024-0.0.1-SNAPSHOT.jar
 ├── docker-compose.yml
 ├── front-end
-│   ├── build
-│   │   ├── assets
-│   │   │   ├── index-B_8GwUsp.js
-│   │   │   └── index-rtrBg8Oz.css
-│   │   ├── favicon.ico
-│   │   ├── fonts
-│   │   │   └── paris2024.ttf
-│   │   ├── imgs
-│   │   │   ├── display.jpeg
-│   │   │   ├── hero-bg.jpg
-│   │   │   ├── logo-paralympiques.png
-│   │   │   ├── logo.png
-│   │   │   └── sports
-│   │   │       ├── athletisme.jpeg
-│   │   │       ├── football.jpeg
-│   │   │       └── natation.jpeg
-│   │   ├── index.html
-│   │   ├── logo192.png
-│   │   ├── logo512.png
-│   │   ├── manifest.json
-│   │   └── robots.txt
+│   ├── build
+│   │   ├── assets
+│   │   │   ├── index-B_8GwUsp.js
+│   │   │   └── index-rtrBg8Oz.css
+│   │   ├── favicon.ico
+│   │   ├── fonts
+│   │   │   └── paris2024.ttf
+│   │   ├── imgs
+│   │   │   ├── display.jpeg
+│   │   │   ├── hero-bg.jpg
+│   │   │   ├── logo-paralympiques.png
+│   │   │   ├── logo.png
+│   │   │   └── sports
+│   │   │       ├── athletisme.jpeg
+│   │   │       ├── football.jpeg
+│   │   │       └── natation.jpeg
+│   │   ├── index.html
+│   │   ├── logo192.png
+│   │   ├── logo512.png
+│   │   ├── manifest.json
+│   │   └── robots.txt
 ├── nginx.conf
 └── supervisord.conf
 
