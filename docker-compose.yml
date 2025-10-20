@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8
+    container_name: jo2024-db
+    environment:
+      MYSQL_ROOT_PASSWORD: your_password
+      MYSQL_DATABASE: jo2024
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  jo2024:
+    build: .
+    container_name: jo2024-app
+    ports:
+      - "8080:80"
+      - "8081:8080"
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/jo2024
+      SPRING_DATASOURCE_USERNAME: your_user
+      SPRING_DATASOURCE_PASSWORD: your_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_MAIL_HOST: mail_host
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: smtp_username
+      SPRING_MAIL_PASSWORD: smtp_password
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+      ADMIN_DEFAULT_EMAIL: define_admin_email
+      ADMIN_DEFAULT_PASSWORD: define_admin_password
+      CORS_ALLOWED_ORIGIN: https://jo2024.doryanbessiere.fr
+      APP_FRONTEND_URL: https://jo2024.doryanbessiere.fr
+      APP_BACKEND_URL: https://jo2024-api.doryanbessiere.fr
+      APP_NAME: Billetterie JO 2024
+      SUPPORT_EMAIL: support@doryanbessiere.fr
+      STRIPE_SECRET_KEY: define_secret_key
+      STRIPE_WEBHOOK_SECRET: define_webhook_secret
+      STRIPE_PUBLIC_KEY: define_public_key
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+
+volumes:
+  db_data:
+
