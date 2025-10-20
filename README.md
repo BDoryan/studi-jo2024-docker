@@ -3,8 +3,8 @@
 Application de billetterie pour les Jeux Olympiques 2024, containerisée avec Docker. Cette application full-stack combine un back-end Spring Boot et un front-end React dans un seul conteneur optimisé.
 
 ## Liens vers les autres documentations
- - [Front-end](https://github.com/BDoryan/studi-jo2024-frontend/)
- - [Back-end](https://github.com/BDoryan/studi-jo2024-backend/)
+- [Front-end](https://github.com/BDoryan/studi-jo2024-frontend/)
+- [Back-end](https://github.com/BDoryan/studi-jo2024-backend/)
 
 ## Table des matières
 
