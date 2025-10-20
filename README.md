@@ -8,16 +8,16 @@ Application de billetterie pour les Jeux Olympiques 2024, containerisée avec Do
 
 ## Table des matières
 
-- [Architecture](#-architecture)
-- [Technologies](#-technologies)
-- [Prérequis](#-prérequis)
-- [Installation](#-installation)
-- [Configuration](#-configuration)
-- [Utilisation](#-utilisation)
-- [Structure du projet](#-structure-du-projet)
-- [Ports et accès](#-ports-et-accès)
-- [Déploiement](#-déploiement)
-- [Maintenance](#-maintenance)
+- [Architecture](#architecture)
+- [Technologies](#technologies)
+- [Prérequis](#prérequis)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Utilisation](#utilisation)
+- [Structure du projet](#structure-du-projet)
+- [Ports et accès](#ports-et-accès)
+- [Déploiement](#déploiement)
+- [Maintenance](#maintenance)
 
 ## Architecture
 
