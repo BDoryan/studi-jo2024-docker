@@ -60,8 +60,6 @@ L'application utilise une architecture Docker multi-services :
 
 - Docker version 20.10+
 - Docker Compose version 2.0+
-- 2 Go de RAM minimum
-- 5 Go d'espace disque
 
 ## Installation
 
