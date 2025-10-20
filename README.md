@@ -33,8 +33,6 @@ L'application utilise une architecture Docker multi-services :
   
 - **Container `jo2024-db`** : Base de données MySQL 8
 
-
-
 ## Technologies
 
 ### Back-end
@@ -128,7 +126,7 @@ docker-compose ps
 La base de données MySQL est configurée avec :
 - Port exposé : `3307:3306`
 - Volume persistant : `db_data`
-- Health check automatique
+- Health check automatique pour lancer le serveur Spring Boot après son lancement
 - Création automatique de la base `jo2024`
 
 ### Configuration Nginx
@@ -148,7 +146,7 @@ Les deux services redémarrent automatiquement en cas d'erreur.
 
 ## Utilisation
 
-### Accès à l'application
+### Accès à l'application (en sortie sur le VPS)
 
 - **Front-end** : http://localhost:8080
 - **API Back-end** : http://localhost:8081
