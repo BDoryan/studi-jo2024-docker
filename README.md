@@ -5,9 +5,11 @@ Application de billetterie pour les Jeux Olympiques 2024, containerisée avec Do
 ## Liens vers les autres documentations
 
 ### Front-end
+
 https://github.com/BDoryan/studi-jo2024-frontend/
 
 ### Back-end
+
 https://github.com/BDoryan/studi-jo2024-backend/
 
 ## Table des matières
