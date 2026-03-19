@@ -1,195 +1,204 @@
-# Billetterie JO 2024 - Docker Container
+# JO 2024 Ticketing - Docker Container
 
-Application de billetterie pour les Jeux Olympiques 2024, containerisée avec Docker. Cette application full-stack combine un back-end Spring Boot et un front-end React dans un seul conteneur optimisé.
+Ticketing application for the 2024 Olympic Games, containerized with Docker. This full-stack application combines a Spring Boot back-end and a React front-end in a single optimized container.
 
-## Liens vers les autres documentations
-- [Front-end](https://github.com/BDoryan/studi-jo2024-frontend/)
-- [Back-end](https://github.com/BDoryan/studi-jo2024-backend/)
+## Links to other documentation
 
-## Schema
+* [Front-end](https://github.com/BDoryan/studi-jo2024-frontend/)
+* [Back-end](https://github.com/BDoryan/studi-jo2024-backend/)
+
+## Diagram
+
 <img src="https://github.com/BDoryan/studi-jo2024-docker/blob/main/schema.png?raw=true">
 
-## Table des matières
+## Table of Contents
 
-- [Architecture](#architecture)
-- [Technologies](#technologies)
-- [Prérequis](#prérequis)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Utilisation](#utilisation)
-- [Structure du projet](#structure-du-projet)
-- [Ports et accès](#ports-et-accès)
-- [Déploiement](#déploiement)
-- [Maintenance](#maintenance)
+* [Architecture](#architecture)
+* [Technologies](#technologies)
+* [Prerequisites](#prerequisites)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Usage](#usage)
+* [Project Structure](#project-structure)
+* [Ports and Access](#ports-and-access)
+* [Deployment](#deployment)
+* [Maintenance](#maintenance)
 
 ## Architecture
 
-L'application utilise une architecture Docker multi-services :
+The application uses a multi-service Docker architecture:
 
-- **Container `jo2024-app`** : Application principale contenant :
-  - Nginx (serveur web pour le front-end React)
-  - Spring Boot (API REST back-end)
-  - Supervisord (gestionnaire de processus)
-  
-- **Container `jo2024-db`** : Base de données MySQL 8
+* **`jo2024-app` container**: Main application containing:
+
+  * Nginx (web server for the React front-end)
+  * Spring Boot (back-end REST API)
+  * Supervisord (process manager)
+
+* **`jo2024-db` container**: MySQL 8 database
 
 ## Technologies
 
 ### Back-end
-- **Java 21** (Eclipse Temurin JDK)
-- **Spring Boot 3.x**
-- **Spring Data JPA**
-- **MySQL 8**
-- **Spring Mail** (envoi d'emails)
-- **Stripe API** (paiements)
+
+* **Java 21** (Eclipse Temurin JDK)
+* **Spring Boot 3.x**
+* **Spring Data JPA**
+* **MySQL 8**
+* **Spring Mail** (email sending)
+* **Stripe API** (payments)
 
 ### Front-end
-- **React** (application SPA)
-- **Vite** (build tool)
-- **Font personnalisée** : Paris 2024
+
+* **React** (SPA application)
+* **Vite** (build tool)
+* **Custom font**: Paris 2024
 
 ### Infrastructure
-- **Docker** & **Docker Compose**
-- **Nginx** (serveur web)
-- **Supervisord** (gestionnaire de processus)
 
-## Prérequis
+* **Docker** & **Docker Compose**
+* **Nginx** (web server)
+* **Supervisord** (process manager)
 
-- Docker version 20.10+
-- Docker Compose version 2.0+
+## Prerequisites
+
+* Docker version 20.10+
+* Docker Compose version 2.0+
 
 ## Installation
 
-### 1. Cloner le projet
+### 1. Clone the project
 
 ```bash
 git clone <repository-url>
 cd jo2024
 ```
 
-### 2. Configuration des variables d'environnement
+### 2. Configure environment variables
 
-Éditer le fichier `docker-compose.yml` et configurer les variables d'environnement :
+Edit the `docker-compose.yml` file and configure the environment variables:
 
 ```yaml
 environment:
-  # Base de données
+  # Database
   SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/jo2024
   SPRING_DATASOURCE_USERNAME: your_user
   SPRING_DATASOURCE_PASSWORD: your_password
   
-  # Configuration email (SMTP)
+  # Email configuration (SMTP)
   SPRING_MAIL_HOST: smtp.example.com
   SPRING_MAIL_PORT: 587
   SPRING_MAIL_USERNAME: your_email@example.com
   SPRING_MAIL_PASSWORD: your_password
   
-  # Compte administrateur par défaut
+  # Default admin account
   ADMIN_DEFAULT_EMAIL: admin@example.com
   ADMIN_DEFAULT_PASSWORD: secure_password
   
-  # URLs de l'application
+  # Application URLs
   CORS_ALLOWED_ORIGIN: https://jo2024.example.com
   APP_FRONTEND_URL: https://jo2024.example.com
   APP_BACKEND_URL: https://jo2024-api.example.com
   
-  # Configuration Stripe
+  # Stripe configuration
   STRIPE_SECRET_KEY: sk_test_...
   STRIPE_WEBHOOK_SECRET: whsec_...
   STRIPE_PUBLIC_KEY: pk_test_...
   
-  # Autres
-  APP_NAME: "Billetterie JO 2024"
+  # Others
+  APP_NAME: "JO 2024 Ticketing"
   SUPPORT_EMAIL: support@example.com
 ```
 
-### 3. Lancer l'application
+### 3. Start the application
 
 ```bash
 docker-compose up -d
 ```
 
-### 4. Vérifier le démarrage
+### 4. Verify startup
 
 ```bash
-# Vérifier les logs
+# Check logs
 docker-compose logs -f
 
-# Vérifier l'état des conteneurs
+# Check container status
 docker-compose ps
 ```
 
 ## Configuration
 
-### Configuration MySQL
+### MySQL Configuration
 
-La base de données MySQL est configurée avec :
-- Port exposé : `3307:3306`
-- Volume persistant : `db_data`
-- Health check automatique pour lancer le serveur Spring Boot après son lancement
-- Création automatique de la base `jo2024`
+The MySQL database is configured with:
 
-### Configuration Nginx
+* Exposed port: `3307:3306`
+* Persistent volume: `db_data`
+* Automatic health check to start Spring Boot after MySQL is ready
+* Automatic creation of the `jo2024` database
 
-Le fichier `nginx.conf` est configuré pour :
-- Servir les fichiers statiques React
-- Gérer le routage SPA (Single Page Application)
-- Rediriger toutes les routes vers `index.html`
+### Nginx Configuration
 
-### Configuration Supervisord
+The `nginx.conf` file is configured to:
 
-Supervisord gère deux processus :
-1. **Nginx** (priorité 10) - Démarrage en premier
-2. **Spring Boot** (priorité 20) - Démarrage après Nginx
+* Serve React static files
+* Handle SPA (Single Page Application) routing
+* Redirect all routes to `index.html`
 
-Les deux services redémarrent automatiquement en cas d'erreur.
+### Supervisord Configuration
 
-## Utilisation
+Supervisord manages two processes:
 
-### Accès à l'application (en sortie sur le VPS)
+1. **Nginx** (priority 10) - starts first
+2. **Spring Boot** (priority 20) - starts after Nginx
 
-- **Front-end** : http://localhost:8080
-- **API Back-end** : http://localhost:8081
-- **Base de données** : localhost:3307
+Both services automatically restart in case of failure.
 
-### Commandes Docker utiles
+## Usage
+
+### Application access (on VPS output)
+
+* **Front-end**: [http://localhost:8080](http://localhost:8080)
+* **Back-end API**: [http://localhost:8081](http://localhost:8081)
+* **Database**: localhost:3307
+
+### Useful Docker commands
 
 ```bash
-# Démarrer les services
+# Start services
 docker-compose up -d
 
-# Arrêter les services
+# Stop services
 docker-compose down
 
-# Voir les logs en temps réel
+# View logs in real time
 docker-compose logs -f
 
-# Voir les logs d'un service spécifique
+# View logs for a specific service
 docker-compose logs -f jo2024
 
-# Redémarrer les services
+# Restart services
 docker-compose restart
 
-# Reconstruire et redémarrer
+# Rebuild and restart
 docker-compose up -d --build
 
-# Arrêter et supprimer les volumes (⚠️ supprime les données)
+# Stop and remove volumes (deletes data)
 docker-compose down -v
 ```
 
-### Accès aux conteneurs
+### Container access
 
 ```bash
-# Accéder au conteneur de l'application
+# Access application container
 docker exec -it jo2024-app bash
 
-# Accéder au conteneur MySQL
+# Access MySQL container
 docker exec -it jo2024-db mysql -u root -p
 ```
 
-## Structure du projet
+## Project Structure
 
-```
+```text
 .
 ├── Dockerfile
 ├── back-end
@@ -219,67 +228,30 @@ docker exec -it jo2024-db mysql -u root -p
 │   │   └── robots.txt
 ├── nginx.conf
 └── supervisord.conf
-
-28 directories, 87 files
 ```
 
-**Structure simplifiée :**
+## Ports and Access
 
-```
-.
-├── Dockerfile                    # Configuration Docker de l'application
-├── docker-compose.yml            # Orchestration des services
-├── nginx.conf                    # Configuration du serveur Nginx
-├── supervisord.conf              # Configuration du gestionnaire de processus
-├── README.md                     # Documentation du projet
-│
-├── back-end/                     # Application Spring Boot
-│   └── jo2024-0.0.1-SNAPSHOT.jar # JAR exécutable du back-end
-│
-└── front-end/                    # Application React
-    └── build/                    # Build de production React
-        ├── index.html            # Point d'entrée de l'application
-        ├── manifest.json         # Manifeste PWA
-        ├── robots.txt            # Configuration SEO
-        ├── assets/               # Fichiers JS et CSS bundlés
-        │   ├── index-B_8GwUsp.js
-        │   └── index-rtrBg8Oz.css
-        ├── fonts/                # Polices personnalisées
-        │   └── paris2024.ttf
-        └── imgs/                 # Images et assets
-            ├── logo.png
-            ├── logo-paralympiques.png
-            ├── hero-bg.jpg
-            ├── display.jpeg
-            └── sports/           # Images des sports
-                ├── athletisme.jpeg
-                ├── football.jpeg
-                └── natation.jpeg
-```
+| Service                | Host Port | Container Port | Description          |
+| ---------------------- | --------- | -------------- | -------------------- |
+| Front-end (Nginx)      | 8080      | 80             | React user interface |
+| Back-end (Spring Boot) | 8081      | 8080           | REST API             |
+| MySQL                  | 3307      | 3306           | Database             |
 
-## Ports et accès
+## Deployment
 
-| Service | Port hôte | Port conteneur | Description |
-|---------|-----------|----------------|-------------|
-| Front-end (Nginx) | 8080 | 80 | Interface utilisateur React |
-| Back-end (Spring Boot) | 8081 | 8080 | API REST |
-| MySQL | 3307 | 3306 | Base de données |
+### Production environment
 
-## Déploiement
+To deploy in production:
 
-### Environnement de production
+1. Configure environment variables in `docker-compose.yml`
+2. Use secrets for sensitive data
+3. Set up a reverse proxy (Traefik, Nginx) with SSL/TLS
+4. Implement regular database backups
 
-Pour déployer en production :
-
-1. **Configurer les variables d'environnement** dans `docker-compose.yml`
-2. **Utiliser des secrets** pour les informations sensibles
-3. **Configurer un reverse proxy** (Traefik, Nginx) avec SSL/TLS
-4. **Mettre en place des sauvegardes** régulières de la base de données
-
-### Exemple avec reverse proxy
+### Reverse proxy example
 
 ```nginx
-# Configuration Nginx en reverse proxy
 server {
     listen 443 ssl;
     server_name jo2024.example.com;
@@ -311,41 +283,42 @@ server {
 
 ## Maintenance
 
-### Sauvegardes
+### Backups
 
-#### Sauvegarde de la base de données
+#### Database backup
 
 ```bash
-# Créer une sauvegarde
 docker exec jo2024-db mysqldump -u root -p jo2024 > backup_$(date +%Y%m%d_%H%M%S).sql
+```
 
-# Restaurer une sauvegarde
+#### Restore backup
+
+```bash
 docker exec -i jo2024-db mysql -u root -p jo2024 < backup_20241020_120000.sql
 ```
 
-#### Sauvegarde des volumes
+#### Volume backup
 
 ```bash
-# Sauvegarder le volume de données
 docker run --rm -v jo2024_db_data:/data -v $(pwd):/backup \
   ubuntu tar czf /backup/db_backup.tar.gz /data
 ```
 
-### Mises à jour
+### Updates
 
-#### Mise à jour du back-end
+#### Back-end update
 
-1. Placer le nouveau JAR dans `back-end/jo2024-0.0.1-SNAPSHOT.jar`
-2. Reconstruire et redémarrer :
+1. Replace the JAR file in `back-end/jo2024-0.0.1-SNAPSHOT.jar`
+2. Rebuild and restart:
 
 ```bash
 docker-compose up -d --build
 ```
 
-#### Mise à jour du front-end
+#### Front-end update
 
-1. Placer le nouveau build dans `front-end/build/`
-2. Reconstruire et redémarrer :
+1. Replace the build in `front-end/build/`
+2. Rebuild and restart:
 
 ```bash
 docker-compose up -d --build
@@ -353,89 +326,39 @@ docker-compose up -d --build
 
 ### Monitoring
 
-#### Vérifier les logs
-
 ```bash
-# Logs de l'application
 docker-compose logs -f jo2024
-
-# Logs de la base de données
 docker-compose logs -f db
-
-# Logs spécifiques à Nginx
 docker exec jo2024-app tail -f /var/log/nginx/access.log
-
-# Logs de Spring Boot
 docker-compose logs -f jo2024 | grep "Spring"
 ```
 
-#### Vérifier l'état des services
+### Troubleshooting
 
 ```bash
-# État des conteneurs
-docker-compose ps
-
-# Ressources utilisées
-docker stats
-
-# Health check de MySQL
-docker exec jo2024-db mysqladmin -u root -p ping
-```
-
-### Résolution de problèmes
-
-#### Le front-end ne charge pas
-
-```bash
-# Vérifier que Nginx est démarré
+# Front-end
 docker exec jo2024-app supervisorctl status nginx
-
-# Vérifier les logs Nginx
 docker exec jo2024-app cat /var/log/nginx/error.log
-
-# Redémarrer Nginx
 docker exec jo2024-app supervisorctl restart nginx
-```
 
-#### Le back-end ne répond pas
-
-```bash
-# Vérifier que Spring Boot est démarré
+# Back-end
 docker exec jo2024-app supervisorctl status backend
-
-# Voir les logs de l'application
 docker-compose logs jo2024
-
-# Redémarrer le back-end
 docker exec jo2024-app supervisorctl restart backend
-```
 
-#### Problèmes de connexion à la base de données
-
-```bash
-# Vérifier que MySQL est prêt
+# Database
 docker-compose logs db
-
-# Tester la connexion
 docker exec jo2024-db mysql -u root -p -e "SHOW DATABASES;"
-
-# Vérifier le health check
 docker inspect jo2024-db | grep -A 10 Health
 ```
 
-## Notes importantes
+## Important Notes
 
-- Le conteneur attend que MySQL soit complètement démarré (via health check) avant de lancer l'application
-- Les données de la base sont persistées dans un volume Docker nommé `db_data`
-- Supervisord garantit que Nginx et Spring Boot sont toujours en cours d'exécution
-- La configuration JPA est en mode `update`, la base de données sera créée/mise à jour automatiquement
+* The container waits for MySQL to be fully ready before starting
+* Data is persisted in a Docker volume named `db_data`
+* Supervisord ensures services stay running
+* JPA is set to `update`, so the database is automatically created/updated
 
-## Licence
+## License
 
-Ce projet est développé dans le cadre d'une évaluation STUDI.
-
-## Support
-
-Pour toute question ou problème, contactez : support@doryanbessiere.fr
-
----
+This project was developed as part of a STUDI (HETIC) assessment.
